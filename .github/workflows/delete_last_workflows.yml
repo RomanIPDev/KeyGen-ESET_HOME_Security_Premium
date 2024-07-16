@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Action Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         
       - name: Run delete last action jobs
         run: sh ./actions/delete_last_workflows.sh RomanIPDev KeygenGenerator-ESET_HOME_Security_Premium
