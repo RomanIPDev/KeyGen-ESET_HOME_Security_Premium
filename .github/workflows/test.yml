@@ -53,5 +53,9 @@ jobs:
       - name: Push changes to the repo
         uses: ad-m/github-push-action@master
         with:
+<<<<<<< HEAD
           github_token: ${{ secrets.GITHUB_TOKEN }}
+=======
+          github_token: ${{ secrets.PAT }}
+>>>>>>> 2c27fb6 (Add)
           branch: ${{ github.ref }}
