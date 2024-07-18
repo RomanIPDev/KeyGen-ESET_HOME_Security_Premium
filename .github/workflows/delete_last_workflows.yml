@@ -1,0 +1,19 @@
+# https://github.com/orgs/community/discussions/26256
+
+name: Remove Expired Workflow Runs
+on:
+  schedule: [{ cron: "30 1 * * *" }] # Schedule to run the workflow every day at 1:30 AM
+  workflow_dispatch:
+
+jobs:
+  clean:
+    name: Delete Expired Workflow Runs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Action Code
+        uses: actions/checkout@v4
+        
+      - name: Run delete last action jobs
+        run: sh ./actions/delete_last_workflows.sh RomanIPDev KeygenGenerator-ESET_HOME_Security_Premium
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
