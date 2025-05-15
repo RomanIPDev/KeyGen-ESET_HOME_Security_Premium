@@ -11,10 +11,10 @@ gh api "repos/$org/$repo/actions/workflows" | jq -r '.workflows[] | .name' | whi
     echo "🗑️ Удаляем запуски для workflow: $workflow_name"
     gh run list --limit 500 --workflow "$workflow_name" --json databaseId \
         | jq -r '.[] | .databaseId' \
-        | xargs -I{} gh run delete {} --confirm
+        | xargs -I{} gh run delete {} --yes  # Используем --yes вместо --confirm
 done
 
-# Удаляем Dependabot runs (через API, так как `gh run list` их не видит)
+# Удаляем Dependabot runs (через API)
 echo "🔍 Поиск запусков Dependabot..."
 dependabot_runs=$(gh api "repos/$org/$repo/actions/runs?actor=dependabot[bot]" | jq -r '.workflow_runs[].id')
 
@@ -22,7 +22,7 @@ if [ -n "$dependabot_runs" ]; then
     echo "🗑️ Удаляем запуски Dependabot..."
     for run_id in $dependabot_runs; do
         echo "Удаление Dependabot run $run_id..."
-        gh api -X DELETE "repos/$org/$repo/actions/runs/$run_id"
+        gh api -X DELETE "repos/$org/$repo/actions/runs/$run_id" --silent
     done
 else
     echo "✅ Нет запусков Dependabot для удаления."
