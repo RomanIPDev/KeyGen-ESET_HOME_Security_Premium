@@ -11,7 +11,7 @@ delete_regular_workflows() {
     gh api "repos/$org/$repo/actions/workflows" | jq -r '.workflows[] | .name' | while read -r workflow_name; do
         echo "🗑️ Удаляем запуски для workflow: $workflow_name"
         # Получаем ID запусков и удаляем по одному (без флагов подтверждения)
-        gh run list --limit 500 --workflow "$workflow_name" --json databaseId \
+        gh run list --limit 10 --workflow "$workflow_name" --json databaseId \
             | jq -r '.[] | .databaseId' \
             | while read -r run_id; do
                 echo "Удаление run $run_id..."
