@@ -3,34 +3,29 @@
 org="$1"
 repo="$2"
 
-echo "Deleting workflow runs for $org/$repo"
+echo "Удаление всех workflow runs для $org/$repo (включая Dependabot)..."
 
-workflows_temp=$(mktemp) # Creates a temporary file to store workflow data.
+# Удаляем стандартные workflow runs
+echo "🔍 Поиск стандартных workflow..."
+gh api "repos/$org/$repo/actions/workflows" | jq -r '.workflows[] | .name' | while read -r workflow_name; do
+    echo "🗑️ Удаляем запуски для workflow: $workflow_name"
+    gh run list --limit 500 --workflow "$workflow_name" --json databaseId \
+        | jq -r '.[] | .databaseId' \
+        | xargs -I{} gh run delete {} --confirm
+done
 
-gh api repos/$org/$repo/actions/workflows | jq -r '.workflows[] | [.id, .path] | @tsv' > $workflows_temp # Lookup workflow
-cat "$workflows_temp" 
+# Удаляем Dependabot runs (через API, так как `gh run list` их не видит)
+echo "🔍 Поиск запусков Dependabot..."
+dependabot_runs=$(gh api "repos/$org/$repo/actions/runs?actor=dependabot[bot]" | jq -r '.workflow_runs[].id')
 
-workflows_names=$(awk '{print $2}' $workflows_temp | grep -v "main")
-
-if [ -z "$workflows_names" ]; then
-
-    echo "All workflows are either successful or failed. Nothing to remove"
-
-else
-
-    echo "Removing all the workflows that are not successful or failed"
-
-    for workflow_name in $workflows_names; do
-
-        workflow_filename=$(basename "$workflow_name")
-        echo "Deleting |$workflow_filename|, please wait..."
-
-        gh run list --limit 500 --workflow $workflow_filename --json databaseId |
-            jq -r '.[] | .databaseId' |
-            xargs -I{} gh run delete {} # Delete all workflow runs for workflow name
+if [ -n "$dependabot_runs" ]; then
+    echo "🗑️ Удаляем запуски Dependabot..."
+    for run_id in $dependabot_runs; do
+        echo "Удаление Dependabot run $run_id..."
+        gh api -X DELETE "repos/$org/$repo/actions/runs/$run_id"
     done
+else
+    echo "✅ Нет запусков Dependabot для удаления."
 fi
 
-rm -rf $workflows_temp
-
-echo "Done."
+echo "✅ Готово. Все workflow runs (включая Dependabot) очищены."
