@@ -4,8 +4,8 @@ on:
   push:
    #  branches:
    #   - main
-  schedule:
-    - cron: '0 9 * * 1'
+  # schedule:
+  #   - cron: '0 9 * * 1'
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -67,13 +67,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           
-      # - name: Send message to Telegram
-      #   uses: appleboy/telegram-action@master
-      #   with:
-      #     to: ${{ secrets.TELEGRAM_TO }}
-      #     token: ${{ secrets.TELEGRAM_TOKEN }}
+      - name: Send message to Telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
 
-      #     message: |  #https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
-      #       ${{ env.MSG1 }}
-      #       ${{ env.MSG2 }}
-      #       ${{ env.MSG3 }}
+          message: |  #https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
+            ${{ env.MSG1 }}
+            ${{ env.MSG2 }}
+            ${{ env.MSG3 }}
