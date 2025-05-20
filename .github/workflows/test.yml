@@ -88,8 +88,9 @@ jobs:
             ✅ Успешно:
             Время выполнения: ${{ env.ELAPSED_TIME_FORMATTED }}
             ${{ env.MSG1 }}
-            ${{ env.MSG2 }}
+            <b>${{ env.MSG2 }}</b>
             ${{ env.MSG3 }}
+          parse_mode: html
 
       - name: Send failure message to Telegram
         if: failure()
