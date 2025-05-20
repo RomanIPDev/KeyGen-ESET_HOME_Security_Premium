@@ -1,7 +1,7 @@
 name: Test the project and update the test-date
 
 on:
-  push:
+  # push:
    #  branches:
    #   - main
   # schedule:
@@ -67,16 +67,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           
-      # - name: Send message to Telegram
-      #   uses: appleboy/telegram-action@master
-      #   with:
-      #     to: ${{ secrets.TELEGRAM_TO }}
-      #     token: ${{ secrets.TELEGRAM_TOKEN }}
-
-      #     message: |  #https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
-      #       ${{ env.MSG1 }}
-      #       ${{ env.MSG2 }}
-      #       ${{ env.MSG3 }}
+# https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
       - name: Send success message to Telegram
         if: success()
         uses: appleboy/telegram-action@master
@@ -91,7 +82,7 @@ jobs:
 
       - name: Send failure message to Telegram
         if: failure()
-        uses: appleboy/telegram-action@master
+        uses: appleboy/telegram-action@master 
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
