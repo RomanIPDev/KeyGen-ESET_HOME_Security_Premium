@@ -84,13 +84,13 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          parse_mode: markdown
           message: |
             ✅ Успешно:
             Время выполнения: ${{ env.ELAPSED_TIME_FORMATTED }}
             ${{ env.MSG1 }}
-            🔑**${{ env.MSG2 }}**
+            🔑 **${{ env.MSG2 }}**
             ${{ env.MSG3 }}
-          parse_mode: html
 
       - name: Send failure message to Telegram
         if: failure()
