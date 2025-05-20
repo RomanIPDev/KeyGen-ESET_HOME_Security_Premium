@@ -67,13 +67,39 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           
-      - name: Send message to Telegram
+      # - name: Send message to Telegram
+      #   uses: appleboy/telegram-action@master
+      #   with:
+      #     to: ${{ secrets.TELEGRAM_TO }}
+      #     token: ${{ secrets.TELEGRAM_TOKEN }}
+
+      #     message: |  #https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
+      #       ${{ env.MSG1 }}
+      #       ${{ env.MSG2 }}
+      #       ${{ env.MSG3 }}
+      - name: Send success message to Telegram
+        if: success()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-
-          message: |  #https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
+          message: |
+            ✅ Успешный тест:
             ${{ env.MSG1 }}
             ${{ env.MSG2 }}
             ${{ env.MSG3 }}
+
+      - name: Send failure message to Telegram
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ❌ Ошибка в GitHub Actions!
+            Репозиторий: ${{ github.repository }}
+            Ветка: ${{ github.ref }}
+            Коммит: ${{ github.sha }}
+            Workflow: ${{ github.workflow }}
+            URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
