@@ -2,23 +2,26 @@ name: Test the project and update the test-date
 
 on:
   # push:
-   #  branches:
-   #   - main
+  #  branches:
+  #   - main
   # schedule:
   #   - cron: '0 9 * * 1'
-  
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
 jobs:
   Test:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
+      - name: 'Set start time'
+        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
+
       - name: 'Checkout Repo'
         uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
+
       - name: 'Generate key and update the test time'
         run: |
           ACCOUNT=0
@@ -28,46 +31,53 @@ jobs:
           git clone --depth 1 https://github.com/rzc0d3r/ESET-KeyGen.git
           cd ESET-KeyGen
           sudo apt update
-          sudo apt install python3-pip
+          sudo apt install -y python3-pip
           sudo pip install -r requirements.txt
           echo "Test results:" >> $GITHUB_STEP_SUMMARY
           if [[ ${ACCOUNT} != 0 ]]
           then
-          for ((attempt=1;attempt<=${ACCOUNT};++attempt))
-          do
-          python3 main.py --chrome --account --email-api guerrillamail --skip-update-check
-          done
-          echo -e "\nAccounts generated:" >> $GITHUB_STEP_SUMMARY
-          cat ./*ACCOUNTS.txt >> $GITHUB_STEP_SUMMARY
+            for ((attempt=1;attempt<=${ACCOUNT};++attempt))
+            do
+              python3 main.py --chrome --account --email-api guerrillamail --skip-update-check
+            done
+            echo -e "\nAccounts generated:" >> $GITHUB_STEP_SUMMARY
+            cat ./*ACCOUNTS.txt >> $GITHUB_STEP_SUMMARY
           fi
           if [[ ${KEY} != 0 ]]
           then
-          for ((attempt=1;attempt<=${KEY};++attempt))
-          do
-          python3 main.py --chrome --key --email-api guerrillamail --skip-update-check
-          done
-          echo -e "\nKeys generated:" >> $GITHUB_STEP_SUMMARY
-          cat ./*KEYS.txt >> $GITHUB_STEP_SUMMARY
-          MSG1=$(cat ./*KEYS.txt | sed -e '6!d')
-          echo MSG1=$MSG1 >> $GITHUB_ENV 
-          MSG2=$(cat ./*KEYS.txt | sed -e '7!d')
-          echo MSG2=$MSG2 >> $GITHUB_ENV
-          MSG3=$(cat ./*KEYS.txt | sed -e '8!d')
-          echo MSG3=$MSG3 >> $GITHUB_ENV
+            for ((attempt=1;attempt<=${KEY};++attempt))
+            do
+              python3 main.py --chrome --key --email-api guerrillamail --skip-update-check
+            done
+            echo -e "\nKeys generated:" >> $GITHUB_STEP_SUMMARY
+            cat ./*KEYS.txt >> $GITHUB_STEP_SUMMARY
+            MSG1=$(sed -n '6p' ./*KEYS.txt)
+            echo MSG1=$MSG1 >> $GITHUB_ENV 
+            MSG2=$(sed -n '7p' ./*KEYS.txt)
+            echo MSG2=$MSG2 >> $GITHUB_ENV
+            MSG3=$(sed -n '8p' ./*KEYS.txt)
+            echo MSG3=$MSG3 >> $GITHUB_ENV
           fi
-          echo
           cd ${{ github.workspace }}
           sed -i '/^ESET-KeyGen - Trial-Key & Account generator/ c\ESET-KeyGen - Trial-Key & Account generator for ESET Antivirus (last test was on '"$(date -u --date='3 hours' +"%d.%m.%Y at %H:%M UTC+3")"')' README.md
           sudo rm -r ESET-KeyGen
           git pull
           git commit -m "Update test time" -a
+
       - name: Push changes to the repo
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-          
-# https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
+
+      - name: Calculate elapsed time
+        run: |
+          END_TIME=$(date +%s)
+          ELAPSED=$((END_TIME - START_TIME))
+          MINUTES=$((ELAPSED / 60))
+          SECONDS=$((ELAPSED % 60))
+          echo "ELAPSED_TIME_FORMATTED=${MINUTES}m ${SECONDS}s" >> $GITHUB_ENV
+
       - name: Send success message to Telegram
         if: success()
         uses: appleboy/telegram-action@master
@@ -75,7 +85,8 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ✅ Успешный тест:
+            ✅ Успешно:
+            Время выполнения: ${{ env.ELAPSED_TIME_FORMATTED }}
             ${{ env.MSG1 }}
             ${{ env.MSG2 }}
             ${{ env.MSG3 }}
@@ -88,9 +99,9 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             ❌ Ошибка в GitHub Actions!
+            Время выполнения: ${{ env.ELAPSED_TIME_FORMATTED }}
             Репозиторий: ${{ github.repository }}
             Ветка: ${{ github.ref }}
             Коммит: ${{ github.sha }}
             Workflow: ${{ github.workflow }}
             URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
