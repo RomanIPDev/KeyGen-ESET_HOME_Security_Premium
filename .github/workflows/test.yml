@@ -84,12 +84,12 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          parse_mode: markdownv2
+          parse_mode: HTML
           message: |
             ✅ Успешно:
             Время выполнения: ${{ env.ELAPSED_TIME_FORMATTED }}
             ${{ env.MSG1 }}
-            🔑 *License Key:* \`${{ env.MSG2 }}\`
+            🔑 <b>${{ env.MSG2 }}</b>
             ${{ env.MSG3 }}
 
       - name: Send failure message to Telegram
