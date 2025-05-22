@@ -7,4 +7,3 @@
 4. A window will appear with a list that can be changed, click on the **Add** button and enter ```https://github.com/rzc0d3r/*``` in the field that appears!
 5. Next, click **OK** button until the **Advanced Setup** window closes!
 6. Now you can access my repositories again even with internet protection enabled!
-   

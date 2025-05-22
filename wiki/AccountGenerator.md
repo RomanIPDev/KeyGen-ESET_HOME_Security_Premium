@@ -8,7 +8,7 @@
 
 <details>
   <summary>Example generation through --email-api tempmail</summary>
-  
+
   ![Windows](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/img/key_run_win_tempmail.png)
 </details>
 
@@ -16,7 +16,7 @@
 
 <details>
   <summary>ESET HOME Account</summary>
-  
+
   1. Run main.py or executable file use [MBCI](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/wiki/MBCI-Inferface.md):
   ```
   python main.py --chrome --account
@@ -34,7 +34,7 @@
 
 <details>
   <summary>Business ESET Account</summary>
-  
+
   1. Run main.py or executable file use [MBCI](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/wiki/MBCI-Inferface.md):
   ```
   python main.py --chrome --business-account
@@ -43,7 +43,7 @@
   ESET-KeyGen_v1.4.7.0_win64.exe --chrome --business-account
   ```
   > File name is unique for each version! Do not copy the above command. This is an example!
-  
+
   > It is also recommended to use ```developermail```, ```guerrillamail```, ```10minutemail``` email api to generate such accounts. So if you are unable to generate this account, try different variations of the email APIs!
 
   2. Wait until appears you will see *"Solve the captcha on the page manually!!!"*. Next, you will see a captcha with text input in the browser window created. You solve it and then just do nothing, the algorithm will do everything for you!
@@ -58,7 +58,7 @@
 
 <details>
   <summary>ESET HOME Account</summary>
-  
+
   1. Run main.py or executable file use [MBCI](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/wiki/MBCI-Inferface.md):
   ```
   python main.py --chrome --account --custom-email-api
@@ -72,9 +72,9 @@
   > Then the algorithm will continue as in the first method
 
   3. After some time in the console you will see the message *"Enter the link to activate your account, it will come to the email address you provide"*, here you need to go to your email and find mail in inbox (you will have to wait)
-    
+
      **FROM: info@product.eset.com**
-     
+
      **SUBJECT: Account Confirmation**
 
      Then open that email and copy the link that is in the button (right click on the button, copy link address) and paste it into the console. If you have done everything correctly, the generation will complete successfully!
@@ -89,7 +89,7 @@
 
 <details>
   <summary>Business ESET Account</summary>
-  
+
   1. Run main.py or executable file use [MBCI](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/wiki/MBCI-Inferface.md):
   ```
   python main.py --chrome --business-account --custom-email-api

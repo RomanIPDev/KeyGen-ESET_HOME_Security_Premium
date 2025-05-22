@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout Action Code
         uses: actions/checkout@v4
-        
+
       - name: Run delete last action jobs
         run: bash ./actions/delete_last_workflows.sh RomanIPDev KeygenGenerator-ESET_HOME_Security_Premium
         env:

@@ -1,3 +1,45 @@
+# Compiled binaries and executables
 *.exe
-*.pyc
+*.dll
+*.so
+*.dylib
+
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+
+# Environments and virtualenvs
+.env
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Logs and databases
+*.log
+*.log.*
+logs/
+*.sqlite
+*.db
+
+# Local development and IDE settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+
+# Build, distribution, and packaging
+build/
+dist/
+*.egg-info/
+*.egg
+wheels/
+pip-wheel-metadata/
+*.manifest
+*.spec
+
+# Example data/local config (customize as needed)
 *.txt

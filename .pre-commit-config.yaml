@@ -1,0 +1,23 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+    -   id: trailing-whitespace # Удаляет пробелы в конце строк.
+    -   id: end-of-file-fixer # Исправляет отсутствие пустой строки в конце файла.
+    -   id: check-yaml # Проверяет корректность YAML файлов.
+    -   id: check-added-large-files # Предупреждает о добавлении больших файлов (по умолчанию >500 КБ).
+        args: [--maxkb=10000] # Изменяем порог до 10 МБ.
+-   repo: https://github.com/PyCQA/flake8
+    rev: 7.1.2
+    hooks:
+    -   id: flake8 # Инструмент Flake8 для проверки стиля кода.
+        args: [--config=.flake8]
+        files: \.py$
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.9
+    hooks:
+    -   id: ruff # Выполняет автоматическую проверку и исправление кода с помощью Ruff.
+        args: ["--fix", "ruff.toml"]
+    -   id: ruff-format # Форматирует код согласно правилам, заданным в ruff.toml.

@@ -8,7 +8,7 @@
 
 <details>
   <summary>Example generation through --email-api tempmail</summary>
-  
+
   ![Windows](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/img/key_run_win_tempmail.png)
 </details>
 
@@ -16,7 +16,7 @@
 
 <details>
   <summary>ESET HOME Security Premium</summary>
-  
+
   1. Run main.py or executable file or use [MBCI](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/wiki/MBCI-Inferface.md):
   ```
   python main.py --chrome --key
@@ -34,7 +34,7 @@
 
 <details>
   <summary>ESET Endpoint Security + ESET Server Security</summary>
-  
+
   1. Run main.py or executable file use [MBCI](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/wiki/MBCI-Inferface.md):
   ```
   python main.py --chrome --business-key
@@ -58,7 +58,7 @@
 
 <details>
   <summary>ESET HOME Security Premium</summary>
-  
+
   1. Run main.py or executable file use [MBCI](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/wiki/MBCI-Inferface.md):
   ```
   python main.py --chrome --key --custom-email-api
@@ -72,16 +72,16 @@
   > Then the algorithm will continue as in the first method
 
   3. After some time in the console you will see the message *"Enter the link to activate your account, it will come to the email address you provide"*, here you need to go to your email and find mail in inbox (you will have to wait)
-    
+
      **FROM: info@product.eset.com**
-     
+
      **SUBJECT: Account Confirmation**
 
      Then open that email and copy the link that is in the button (right click on the button, copy link address) and paste it into the console. If you have done everything correctly, the generation will complete successfully!
 
      ![Windows](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/img/activated_href_esethome.png)
 
-  4. Wait until appears you will see the license key 
+  4. Wait until appears you will see the license key
   > This information will also be written to a file named "Today date - ESET KEYS.txt"
 
   ![Windows](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/img/key_run_win_custom_email_api.png)
@@ -89,7 +89,7 @@
 
 <details>
   <summary>ESET Endpoint Security + ESET Server Security</summary>
-  
+
   1. Run main.py or executable file use [MBCI](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/wiki/MBCI-Inferface.md):
   ```
   python main.py --chrome --business-key --custom-email-api
@@ -114,7 +114,7 @@
 
      ![Windows](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/img/activated_href_business.png)
 
-  5. Wait until appears you will see the license key 
+  5. Wait until appears you will see the license key
   > This information will also be written to a file named "Today date - ESET KEYS.txt"
 
 ![Windows](https://github.com/rzc0d3r/ESET-KeyGen/blob/main/img/business_key_run_win_custom_email_api.png)
