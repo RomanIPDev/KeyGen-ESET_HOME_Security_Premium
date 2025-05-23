@@ -76,13 +76,27 @@ uv run python run_telegram_github_action.py
 
 ## ⚛️ Автозапуск через systemd
 
-### 1. Создание unit-файла:
+### 1. Обновите pip внутри виртуального окружения:
+
+```bash
+sudo -u $USER /home/$USER/Work/KeyGen-ESET_HOME_Security_Premium/customizations/.venv/bin/python -m ensurepip --upgrade
+```
+### Проверьте результат:
+```bash
+sudo -u $USER /home/$USER/Work/KeyGen-ESET_HOME_Security_Premium/customizations/.venv/bin/python -m pip list
+```
+Вы должны увидеть список пакетов.
+
+### Првоерка запуска скрипта:
+sudo -u $USER /home/$USER/Work/KeyGen-ESET_HOME_Security_Premium/customizations/.venv/bin/python /home/$USER/Work/KeyGen-ESET_HOME_Security_Premium/customizations/run_telegram_github_action.py
+
+### 2. Создание unit-файла:
 
 ```bash
 sudo nano /etc/systemd/system/telegram_github_action.service
 ```
 
-### 2. Пример unit-файла:
+### Пример unit-файла:
 
 ```ini
 [Unit]
@@ -93,7 +107,9 @@ After=network.target
 Type=simple
 User=user
 WorkingDirectory=/home/user/Work/KeyGen-ESET_HOME_Security_Premium/customizations
-ExecStart=/home/user/.local/bin/uv run python run_telegram_github_action.py
+
+ExecStart=/home/user/Work/KeyGen-ESET_HOME_Security_Premium/customizations/.venv/bin/python /home/user/Work/KeyGen-ESET_HOME_Security_Premium/customizations/run_telegram_github_action.py
+
 Restart=always
 RestartSec=5
 Environment=PATH=/home/user/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
