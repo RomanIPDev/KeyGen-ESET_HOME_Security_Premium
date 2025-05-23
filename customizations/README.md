@@ -87,7 +87,7 @@ sudo -u $USER /home/$USER/Work/KeyGen-ESET_HOME_Security_Premium/customizations/
 ```
 Вы должны увидеть список пакетов.
 
-### Првоерка запуска скрипта:
+### Проверка запуска скрипта:
 sudo -u $USER /home/$USER/Work/KeyGen-ESET_HOME_Security_Premium/customizations/.venv/bin/python /home/$USER/Work/KeyGen-ESET_HOME_Security_Premium/customizations/run_telegram_github_action.py
 
 ### 2. Создание unit-файла:
