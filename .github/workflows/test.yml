@@ -81,7 +81,6 @@ jobs:
           MSG3=$(sed -n '8p' ./*KEYS.txt)
           echo MSG3=$MSG3 >> $GITHUB_ENV
           fi
-          cd ${{ github.workspace }}
       - name: Calculate elapsed time
         run: |
           END_TIME=$(date +%s)
