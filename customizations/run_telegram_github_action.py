@@ -154,7 +154,7 @@ async def run_github_workflow(user: Optional[Any]) -> Tuple[int, str]:
                 if response.status == 204:
                     return (
                         204,
-                        "Workflow успешно запущен. Ключ будет отправлен отдельным сообщением в течение минуты.",
+                        "Workflow успешно запущен. Ключ будет отправлен отдельным сообщением в течение 3 минут.",
                     )
 
                 error_messages = {
